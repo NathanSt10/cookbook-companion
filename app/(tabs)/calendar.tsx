@@ -1,15 +1,22 @@
-import { StyleSheet, View, Text, ScrollView, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Calendar } from "react-native-calendars";
 import { useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Calendar } from "react-native-calendars";
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
 
+  type PlannedRecipe = {
+    title: string;
+    image: string;
+  };
+
+  type PlannedRecipes = Record<string, PlannedRecipe[]>;
+
   // Example planned recipes (replace with backend later)
-  const plannedRecipes = {
+  const plannedRecipes: PlannedRecipes = {
     "2025-09-23": [
       { title: "Avocado Toast", image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092" },
       { title: "Lemon Cake", image: "https://images.unsplash.com/photo-1605478571920-74b90cda44bb" },
@@ -18,6 +25,7 @@ export default function CalendarPage() {
       { title: "Pasta Primavera", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836" },
     ],
   };
+
 
   return (
     <View style={styles.container}>
