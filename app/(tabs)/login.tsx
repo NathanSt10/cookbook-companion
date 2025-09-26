@@ -1,6 +1,12 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
+import React, { JSX } from "react";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
+  const testButtonPress = (): void => {
+        console.log('🔴 Button pressed!');
+        Alert.alert('Button Test', 'Button is working!');
+    };
+
   return (
     <View style={styles.container}>
       {/* Title */}
@@ -18,7 +24,7 @@ export default function LoginPage() {
       />
 
       {/* Continue button */}
-      <TouchableOpacity style={styles.continueButton}>
+      <TouchableOpacity style={styles.continueButton} onPress={testButtonPress}>
         <Text style={styles.continueButtonText}>Continue</Text>
       </TouchableOpacity>
 
