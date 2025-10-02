@@ -94,15 +94,6 @@ export default function Index() {
           </TouchableOpacity>
         </ScrollView>
       </ScrollView>
-
-      {/* Footer nav bar */}
-      <View style={styles.footer}>
-        <Ionicons name="home" size={24} />
-        <Ionicons name="calendar-outline" size={24} />
-        <Ionicons name="cart-outline" size={24} />
-        <Ionicons name="notifications-outline" size={24} />
-        <Ionicons name="person-outline" size={24} />
-      </View>
     </View>
   );
 }

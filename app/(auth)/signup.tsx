@@ -75,7 +75,7 @@ export default function LoginPage(): JSX.Element {
         {/* Lase name input */}
         <TextInput
             style={styles.input}
-            placeholder="First name"
+            placeholder="Last name"
             value={lastName}
             onChangeText={setLastName}
         />
