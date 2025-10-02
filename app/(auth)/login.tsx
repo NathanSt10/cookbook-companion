@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
@@ -66,6 +66,9 @@ export default function Login() {
           {loading ? "Signing in..." : "Sign in"}
         </Text>
       </Pressable>
+
+      <Link href="/signup">No account? Sign up here</Link>
+
     </View>
   );
 }
