@@ -1,5 +1,5 @@
-import { Link } from "expo-router";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link, router } from "expo-router";
+import { createUserWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { JSX, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -59,6 +59,18 @@ export default function LoginPage(): JSX.Element {
   };
 
 
+  const signInGuest = async () => {
+    try {
+      const userCredential = await signInAnonymously(auth);
+      const user = userCredential.user;
+
+      router.replace("/");
+    } catch (error) {
+      return { success: false};
+    }
+  };
+
+
   return (
     <View style={styles.container}>
         {/* Title */}
@@ -111,7 +123,9 @@ export default function LoginPage(): JSX.Element {
         <Text style={styles.orHeader}>---or---</Text>
 
         {/* Guest login */}
-        <Text style={styles.guestHeader}>continue as <Text style={styles.guestLink}>guest</Text></Text>
+        <TouchableOpacity onPress={signInGuest}>
+            <Text style={styles.guestHeader}>continue as <Text style={styles.guestLink}>guest</Text></Text>
+        </TouchableOpacity>
 
         <Link style={styles.link} href="/login">Already have an account?</Link>
 
