@@ -2,7 +2,7 @@ import { Redirect } from "expo-router";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { auth } from "/home/henry-xiong/VSCodeProjects/cookbook-companion/firebase.js";
+import { auth } from "../firebase.js";
 
 export default function Index() {
   const [user, setUser] = useState<User | null | undefined>(undefined);
@@ -21,8 +21,8 @@ export default function Index() {
   }
 
   if (user === null) {
-    return <Redirect href="/(auth)/login" />;
+    return <Redirect href="./(auth)/login" />;
   }
 
-  return <Redirect href="/(tabs)/home" />;
+  return <Redirect href="./(tabs)/home" />;
 }
