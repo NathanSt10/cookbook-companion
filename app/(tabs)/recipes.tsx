@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function RecipePage() {
   return (
@@ -53,15 +53,7 @@ export default function RecipePage() {
         </View>
       </ScrollView>
 
-      {/* Footer nav bar */}
-            <View style={styles.footer}>
-              <Ionicons name="home" size={24} />
-              <Ionicons name="calendar-outline" size={24} />
-              <Ionicons name="cart-outline" size={24} />
-              <Ionicons name="notifications-outline" size={24} />
-              <Ionicons name="person-outline" size={24} />
-            </View>
-          </View>
+    </View>
   );
 }
 

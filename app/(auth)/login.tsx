@@ -1,35 +1,31 @@
 import { Link, router } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { auth } from "../../firebase";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const onLogin = async () => {
-    setErr(null);
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
-      router.replace("/");
+        router.replace("/");
     } 
       catch (e: any) {
-      setErr(e.message ?? "Login error");
+        Alert.alert("Login error." + e)
     } 
       finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
   return (
-    <View style={{ flex: 1, padding: 24, justifyContent: "center", gap: 12 }}>
-      <Text style={{ fontSize: 24, fontWeight: "700", marginBottom: 8 }}>
-        Login
-      </Text>
+    <View style={ styles.container }>
+      <Text style={ styles.title }>Cookbook Companion</Text>
 
       <TextInput
         autoCapitalize="none"
@@ -38,7 +34,7 @@ export default function Login() {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        style={{ borderWidth: 1, borderRadius: 8, padding: 12 }}
+        style={ styles.input }
       />
 
       <TextInput
@@ -46,29 +42,130 @@ export default function Login() {
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
-        style={{ borderWidth: 1, borderRadius: 8, padding: 12 }}
+        style={ styles.input }
       />
-
-      {err ? <Text style={{ color: "red" }}>{err}</Text> : null}
 
       <Pressable
         onPress={onLogin}
         disabled={loading}
-        style={{
-          backgroundColor: "#111827",
-          padding: 14,
-          borderRadius: 10,
-          alignItems: "center",
-          opacity: loading ? 0.6 : 1,
-        }}
+        style={ styles.continueButton }
       >
-        <Text style={{ color: "white", fontWeight: "700" }}>
-          {loading ? "Signing in..." : "Sign in"}
-        </Text>
+        <Text style={ styles.continueButtonText }></Text>
       </Pressable>
+
+      <Text style={ styles.orHeader }> 
+        -----or-----
+      </Text>
+
+      <Text style={ styles.guestHeader }>
+        continue as <Text style={ styles.guestLink }>
+          guest
+          </Text>
+      </Text>
+
+      <TouchableOpacity style={ styles.socialButton}>
+        <Text style={ styles.socialButtonText}>Continue with Google</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={ styles.socialButton}>
+          <Text style={ styles.socialButtonText}>Continue with Apple</Text>
+      </TouchableOpacity>
 
       <Link href="/signup">No account? Sign up here</Link>
 
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    backgroundColor: "white",
+  },
+
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 40,
+  },
+
+  createHeader: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+
+  enterEmailHeader: {
+    textAlign: "center",
+    fontSize: 14,
+    marginBottom: 20,
+    color: "#666",
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 20,
+  },
+
+  continueButton: {
+    backgroundColor: "black",
+    borderRadius: 8,
+    paddingVertical: 12,
+    marginBottom: 20,
+  },
+
+  continueButtonText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  orHeader: {
+    textAlign: "center",
+    marginVertical: 10,
+    fontSize: 14,
+    color: "#666",
+  },
+
+  guestHeader: {
+    textAlign: "center",
+    marginBottom: 20,
+    fontSize: 13,
+  },
+
+  guestLink: {
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+  },
+
+  socialButton: {
+    backgroundColor: "#f2f2f2",
+    borderRadius: 8,
+    paddingVertical: 12,
+    marginBottom: 10,
+  },
+
+  socialButtonText: {
+    textAlign: "center",
+    fontSize: 16,
+  },
+
+  terms: {
+    marginTop: 30,
+    textAlign: "center",
+    fontSize: 12,
+    color: "#666",
+  },
+
+  link: {
+    textDecorationLine: "underline",
+    fontWeight: "bold",
+  },
+});
