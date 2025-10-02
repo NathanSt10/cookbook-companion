@@ -1,9 +1,10 @@
-import { Link } from "expo-router";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link, router } from "expo-router";
+import { createUserWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { JSX, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import '../../firebase';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 
 export default function LoginPage(): JSX.Element {
   
@@ -12,34 +13,35 @@ export default function LoginPage(): JSX.Element {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  const createUser = async (email: string, password: string) => {
+  const createUser = async (email: string, password: string, firstName: string, lastName: string) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        email: user.email,
+        firstName: firstName,
+        lastName: lastName,
+        preferences: null,
+        createdAt: serverTimestamp()
+      });
 
-      console.log('user created successfully:', user.uid);
+
       return { success: true, user}
     } catch (error) {
-      console.error('error creating user:');
       return { success: false};
     }
   };
 
   const handleAuth = async () => {
-    console.log('handleAuth called');
-    console.log('email: ', email);
-    console.log('password', password);
 
-
-    if (!email || !password) {
-      console.log('fields are empty');
+    if (!email || !password || !firstName || !lastName) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
-    console.log('About to create user...'); // Add this
-    const result = await createUser(email, password);
-    console.log('Result:', result); // Add this
+    const result = await createUser(email, password, firstName, lastName);
   
     if (result.success) {
       Alert.alert('Success', 'Account created successfully');
@@ -52,6 +54,20 @@ export default function LoginPage(): JSX.Element {
   const clearFields = () => {
     setEmail('');
     setPassword('');
+    setFirstName('');
+    setLastName('');
+  };
+
+
+  const signInGuest = async () => {
+    try {
+      const userCredential = await signInAnonymously(auth);
+      const user = userCredential.user;
+
+      router.replace("/");
+    } catch (error) {
+      return { success: false};
+    }
   };
 
 
@@ -107,7 +123,9 @@ export default function LoginPage(): JSX.Element {
         <Text style={styles.orHeader}>---or---</Text>
 
         {/* Guest login */}
-        <Text style={styles.guestHeader}>continue as <Text style={styles.guestLink}>guest</Text></Text>
+        <TouchableOpacity onPress={signInGuest}>
+            <Text style={styles.guestHeader}>continue as <Text style={styles.guestLink}>guest</Text></Text>
+        </TouchableOpacity>
 
         <Link style={styles.link} href="/login">Already have an account?</Link>
 
