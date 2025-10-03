@@ -16,7 +16,18 @@ export default function Login() {
         router.replace("/");
     } 
       catch (e: any) {
-        Alert.alert("Login error." + e)
+        if (!email && !password) {
+          Alert.alert("Please enter valid email and password!")
+        }
+        else if (!email) {
+          Alert.alert('Please enter valid email!');
+          return;
+        }
+        else if (!password) {
+          Alert.alert('Please enter pasword!');
+          return;
+        }
+        
     } 
       finally {
         setLoading(false);
