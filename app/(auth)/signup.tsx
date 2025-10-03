@@ -29,7 +29,8 @@ export default function LoginPage(): JSX.Element {
 
 
       return { success: true, user}
-    } catch (error) {
+    } 
+    catch (error) {
       return { success: false};
     }
   };
@@ -44,11 +45,11 @@ export default function LoginPage(): JSX.Element {
     const result = await createUser(email, password, firstName, lastName);
   
     if (result.success) {
-      Alert.alert('Success', 'Account created successfully');
-      clearFields();
-    } else {
+      router.replace('/userpref');
+    } 
+    else {
       Alert.alert('Failed to create account');
-  }
+    }
   }
 
   const clearFields = () => {
@@ -64,9 +65,10 @@ export default function LoginPage(): JSX.Element {
       const userCredential = await signInAnonymously(auth);
       const user = userCredential.user;
 
-      router.replace("/");
-    } catch (error) {
-      return { success: false};
+      router.replace("/userpref");
+    } 
+    catch (error) {
+      return { success: false };
     }
   };
 
