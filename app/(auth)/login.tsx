@@ -1,5 +1,5 @@
 import { Link, router } from "expo-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInAnonymously, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Alert, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { auth } from "../../firebase";
@@ -23,6 +23,18 @@ export default function Login() {
     }
   };
 
+  const signInGuest = async () => {
+      try {
+        const userCredential = await signInAnonymously(auth);
+        const user = userCredential.user;
+  
+        router.replace("/home");
+      } 
+      catch (error) {
+        return { success: false };
+      }
+    };
+    
   return (
     <View style={ styles.container }>
       <Text style={ styles.title }>Cookbook Companion</Text>
@@ -60,11 +72,9 @@ export default function Login() {
         -----or-----
       </Text>
 
-      <Text style={ styles.guestHeader }>
-        continue as <Text style={ styles.guestLink }>
-          guest
-          </Text>
-      </Text>
+      <TouchableOpacity onPress={signInGuest}>
+        <Text style={styles.guestHeader}>continue as <Text style={styles.guestLink}>guest</Text></Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={ styles.socialButton}>
         <Text style={ styles.socialButtonText}>Continue with Google</Text>

@@ -45,7 +45,7 @@ export default function LoginPage(): JSX.Element {
     const result = await createUser(email, password, firstName, lastName);
   
     if (result.success) {
-      router.replace('/userpref');
+      router.replace('/home');
     } 
     else {
       Alert.alert('Failed to create account');
@@ -65,7 +65,7 @@ export default function LoginPage(): JSX.Element {
       const userCredential = await signInAnonymously(auth);
       const user = userCredential.user;
 
-      router.replace("/userpref");
+      router.replace("/home");
     } 
     catch (error) {
       return { success: false };
