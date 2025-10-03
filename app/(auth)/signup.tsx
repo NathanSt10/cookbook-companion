@@ -37,8 +37,24 @@ export default function LoginPage(): JSX.Element {
 
   const handleAuth = async () => {
 
-    if (!email || !password || !firstName || !lastName) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!email && !password && !firstName && !lastName) {
+      Alert.alert("Please fill out all fields")
+      return;
+    }
+    else if (!email) {
+      Alert.alert('Please enter valid email!');
+      return;
+    }
+    else if (!password) {
+      Alert.alert('Please enter pasword!');
+      return;
+    }
+    else if (!firstName) {
+      Alert.alert('Please enter first name');
+      return;
+    }
+    else if (!lastName) {
+      Alert.alert('Please enter lastname');
       return;
     }
 
