@@ -50,7 +50,10 @@ export default function Login() {
         disabled={loading}
         style={ styles.continueButton }
       >
-        <Text style={ styles.continueButtonText }></Text>
+        <Text 
+          style={ styles.continueButtonText }>
+              Login
+        </Text>
       </Pressable>
 
       <Text style={ styles.orHeader }> 
@@ -84,27 +87,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "white",
   },
-
   title: {
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 40,
   },
-
   createHeader: {
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 18,
   },
-
   enterEmailHeader: {
     textAlign: "center",
     fontSize: 14,
     marginBottom: 20,
     color: "#666",
   },
-
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
@@ -112,58 +111,49 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 20,
   },
-
   continueButton: {
     backgroundColor: "black",
     borderRadius: 8,
     paddingVertical: 12,
     marginBottom: 20,
   },
-
   continueButtonText: {
     color: "white",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
-
   orHeader: {
     textAlign: "center",
     marginVertical: 10,
     fontSize: 14,
     color: "#666",
   },
-
   guestHeader: {
     textAlign: "center",
     marginBottom: 20,
     fontSize: 13,
   },
-
   guestLink: {
     fontWeight: "bold",
     textDecorationLine: "underline",
   },
-
   socialButton: {
     backgroundColor: "#f2f2f2",
     borderRadius: 8,
     paddingVertical: 12,
     marginBottom: 10,
   },
-
   socialButtonText: {
     textAlign: "center",
     fontSize: 16,
   },
-
   terms: {
     marginTop: 30,
     textAlign: "center",
     fontSize: 12,
     color: "#666",
   },
-
   link: {
     textDecorationLine: "underline",
     fontWeight: "bold",
